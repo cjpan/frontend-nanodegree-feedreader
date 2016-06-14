@@ -55,7 +55,7 @@ $(function() {
 
 
     /* TODO: Write a new test suite named "The menu" */
-    describe('The menu', function() { 
+    describe('The menu', function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -74,6 +74,7 @@ $(function() {
         it('changes visibility', function() {
             var menu_hidden;
 
+            // toggle menu twice to test the cases of visible and invisible.
             for (var i = 0; i < 2; i++ ) {
                 menu_hidden = $('body').hasClass('menu-hidden');
                 $('.menu-icon-link').trigger('click');
@@ -82,23 +83,46 @@ $(function() {
         });
     });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
-    describe('Initial Entries', function() { 
-
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
-        it('has at least 1 .entry element within .feed container', function() {
+      /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
+        beforeEach(function(done){
+            loadFeed(0, done);
         });
+          /* TODO: Write a test that ensures when the loadFeed
+           * function is called and completes its work, there is at least
+           * a single .entry element within the .feed container.
+           * Remember, loadFeed() is asynchronous so this test will require
+           * the use of Jasmine's beforeEach and asynchronous done() function.
+           */
+        // Check the .feed's children if there is any feeds loaded.
+        it('has at least 1 .entry element within .feed container', function(done) {
+            expect($('.feed').children().length).toBeGreaterThan(0);
+            done();
+        });
+    });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+      /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+        var lastFeed;
+        var newFeed;
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-     });
+        // Load feeds twice. Save the lastFeed and newFeed and compare them.
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                lastFeed = $('.feed').html();
+                loadFeed(1, function() {
+                    newFeed = $('.feed').html();
+                    done();
+                });
+            });
+        });
+          /* TODO: Write a test that ensures when a new feed is loaded
+           * by the loadFeed function that the content actually changes.
+           * Remember, loadFeed() is asynchronous.
+           */
+        it('is loaded', function(done) {
+            expect(lastFeed).not.toBe(newFeed);
+            done();
+        });
+    });
 }());
