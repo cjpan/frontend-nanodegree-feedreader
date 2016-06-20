@@ -1,5 +1,5 @@
 # Project Overview
-In this project you are given a web-based application that reads RSS feeds. That's where you come in.
+In this project I was given a web-based application that reads RSS feeds. That's where I come in.
 
 # How to run the application
 1. Download the application from my GitHub repository: https://github.com/cjpan/frontend-nanodegree-feedreader.
